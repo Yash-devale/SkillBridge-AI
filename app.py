@@ -39,7 +39,7 @@ MAX_JD_LENGTH = 50_000  # avoid excessive text processing in public deployments
 # Page configuration
 # ----------------------------------------------------------------------
 st.set_page_config(
-    page_title="SkillBridge AI — Resume Intelligence",
+    page_title="SkillBridge AI | Career Intelligence",
     page_icon="\U0001F4C4",
     layout="wide",
 )
@@ -49,7 +49,48 @@ st.set_page_config(
 # ----------------------------------------------------------------------
 CUSTOM_CSS = """
 <style>
-    .stApp { background-color: #F8F9FB; }
+
+    .stApp { background-color: #F6F8FC; }
+    .block-container { max-width: 1440px; padding-top: 2rem; padding-bottom: 3rem; }
+    [data-testid="stHeader"] { background: rgba(246, 248, 252, 0.92); }
+    h1, h2, h3 { letter-spacing: -0.025em; }
+    h1 { color: #172554; }
+    h2, h3 { color: #1E293B; }
+    div[data-testid="stMetric"] {
+        background: #FFFFFF; border: 1px solid #E2E8F0;
+        border-radius: 14px; padding: 14px 16px;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.035);
+    }
+    div[data-testid="stMetric"] label { color: #64748B; }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] { color: #172554; }
+    div[data-testid="stFileUploader"] section {
+        border: 1px dashed #A5B4FC; border-radius: 14px; background: #FFFFFF;
+    }
+    div[data-testid="stTextArea"] textarea,
+    div[data-testid="stTextInput"] input {
+        border-radius: 10px; border-color: #CBD5E1; background: #FFFFFF;
+    }
+    div.stButton > button, div.stDownloadButton > button {
+        border-radius: 10px; min-height: 2.6rem; font-weight: 600;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    div.stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #4F46E5, #4338CA);
+        border: 0; color: #FFFFFF;
+    }
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
+        transform: translateY(-1px); box-shadow: 0 5px 14px rgba(79, 70, 229, 0.14);
+    }
+    div[data-testid="stExpander"] {
+        border: 1px solid #E2E8F0; border-radius: 12px; background: #FFFFFF;
+    }
+    div[data-testid="stAlert"] { border-radius: 12px; }
+    div[data-testid="stDataFrame"] { border: 1px solid #E2E8F0; border-radius: 10px; overflow: hidden; }
+    @media (max-width: 768px) {
+        .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1rem; }
+        .app-header-title { font-size: 1.7rem; }
+    }
+
 
     .app-header-title {
         font-size: 2.1rem;
@@ -162,6 +203,73 @@ CUSTOM_CSS = """
         border-top: 1px solid #E5E7EB;
         padding-top: 0.8rem;
     }
+
+    /* SkillBridge Studio visual system */
+    .block-container { max-width: 1380px; padding-top: 1.25rem; }
+    .app-hero {
+        position: relative; overflow: hidden; padding: 2rem 2.15rem 1.8rem;
+        border-radius: 24px; margin: .3rem 0 1.15rem;
+        color: #F8FAFC;
+        background: radial-gradient(circle at 88% 12%, rgba(129,140,248,.55), transparent 28%),
+                    radial-gradient(circle at 72% 100%, rgba(45,212,191,.20), transparent 28%),
+                    linear-gradient(120deg, #111827 0%, #1E1B4B 54%, #312E81 100%);
+        box-shadow: 0 18px 45px rgba(30, 27, 75, .16);
+    }
+    .app-hero:after {
+        content: ""; position:absolute; width:260px; height:260px; right:-95px; top:-115px;
+        border:1px solid rgba(255,255,255,.18); border-radius:50%;
+        box-shadow: 0 0 0 26px rgba(255,255,255,.035), 0 0 0 54px rgba(255,255,255,.025);
+    }
+    .hero-eyebrow {
+        display:inline-flex; align-items:center; gap:8px; padding:6px 11px;
+        border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08);
+        border-radius:999px; color:#C7D2FE; font-size:.76rem; font-weight:700;
+        letter-spacing:.09em; text-transform:uppercase;
+    }
+    .app-hero-title { margin:.8rem 0 .45rem; font-size:clamp(2rem,4vw,3.1rem);
+        line-height:1.08; letter-spacing:-.055em; font-weight:800; color:#FFFFFF; }
+    .app-hero-copy { max-width:760px; color:#D1D5DB; font-size:1.02rem; line-height:1.65; }
+    .hero-pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:1.2rem; }
+    .hero-pill { padding:7px 10px; border-radius:9px; font-size:.78rem; font-weight:600;
+        color:#E0E7FF; background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.12); }
+    .section-kicker { color:#6366F1; text-transform:uppercase; letter-spacing:.12em;
+        font-size:.72rem; font-weight:800; margin-bottom:.25rem; }
+    .workflow-heading { font-size:1.55rem; font-weight:800; letter-spacing:-.04em;
+        color:#111827; margin:0 0 .35rem; }
+    .workflow-copy { color:#64748B; font-size:.93rem; margin-bottom:1rem; }
+    .step-card {
+        background:#FFFFFF; border:1px solid #E2E8F0; border-radius:18px;
+        padding:1.15rem 1.2rem; min-height:100%; box-shadow:0 4px 16px rgba(15,23,42,.035);
+    }
+    .step-number { display:inline-flex; align-items:center; justify-content:center;
+        width:34px; height:34px; border-radius:11px; color:#4338CA;
+        background:#EEF2FF; font-weight:800; margin-bottom:.6rem; }
+    .step-title { color:#111827; font-weight:750; font-size:1.03rem; margin-bottom:.25rem; }
+    .step-copy { color:#64748B; font-size:.83rem; line-height:1.5; margin-bottom:.7rem; }
+    .st-key-jd_text textarea { min-height: 260px; }
+    .result-banner {
+        display:flex; align-items:center; gap:12px; border-radius:16px;
+        padding:1rem 1.15rem; background:linear-gradient(100deg,#EEF2FF,#F5F3FF);
+        border:1px solid #C7D2FE; margin:.5rem 0 1.2rem;
+    }
+    .result-banner-icon { width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+        border-radius:13px;background:#4338CA;color:#FFFFFF;font-size:1.25rem;flex-shrink:0; }
+    .result-banner-title { color:#1E1B4B;font-weight:800;font-size:1.02rem; }
+    .result-banner-copy { color:#6366F1;font-size:.84rem;margin-top:2px; }
+    .stTabs [data-baseweb="tab-list"] { gap:8px; background:#EEF2F7; padding:6px;
+        border-radius:14px; }
+    .stTabs [data-baseweb="tab"] { border-radius:10px; padding:9px 15px; height:auto; }
+    .stTabs [aria-selected="true"] { background:#FFFFFF; box-shadow:0 2px 8px rgba(15,23,42,.08); }
+    div[data-testid="stMetric"] { border-radius:16px; border-color:#E0E7FF; }
+    div[data-testid="stFileUploader"] { padding:.25rem; }
+    .privacy-note { background:#F1F5F9; border:1px solid #E2E8F0; border-radius:12px;
+        padding:.85rem 1rem; margin-top:2rem; }
+    @media (max-width: 768px) {
+        .app-hero { padding:1.4rem 1.2rem; border-radius:18px; }
+        .app-hero-title { font-size:2rem; }
+        .step-card { padding:1rem; }
+    }
+
 </style>
 """
 
@@ -188,8 +296,8 @@ def render_gauge(score: float) -> go.Figure:
         )
     )
     fig.update_layout(
-        height=260,
-        margin=dict(l=20, r=20, t=30, b=10),
+        height=220,
+        margin=dict(l=12, r=12, t=18, b=4),
         paper_bgcolor="rgba(0,0,0,0)",
         font={"color": "#1F2937"},
     )
@@ -308,6 +416,16 @@ def render_section_badges(sections: dict, completeness_result: dict):
     st.markdown(badges_html, unsafe_allow_html=True)
 
 
+
+def redact_personal_data(text: str) -> str:
+    """Mask common contact details before displaying evidence snippets."""
+    import re
+    value = str(text or "")
+    value = re.sub(r"(?i)\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b", "[email hidden]", value)
+    value = re.sub(r"(?<!\\w)(?:\\+?\\d[\\d ().-]{7,}\\d)(?!\\w)", "[phone hidden]", value)
+    return value
+
+
 def render_result_dashboard(result: dict, resume_raw_text: str, sections: dict,
                              completeness_result: dict, bullet_results: dict, key_prefix: str = ""):
     """Renders the full results dashboard for one resume-vs-JD analysis."""
@@ -320,15 +438,20 @@ def render_result_dashboard(result: dict, resume_raw_text: str, sections: dict,
     keyword_result = result["keyword_result"]
 
     st.divider()
-    st.header("Results")
+    st.markdown(
+        '<div class="result-banner"><div class="result-banner-icon">✦</div><div><div class="result-banner-title">Your role-fit snapshot is ready</div><div class="result-banner-copy">Explore the score, validate skill evidence, then turn gaps into a focused learning plan.</div></div></div>',
+        unsafe_allow_html=True,
+    )
+    st.header("Role-fit overview")
 
-    gauge_col, label_col = st.columns([2, 1])
+    gauge_col, label_col = st.columns([1.35, 1])
     with gauge_col:
         st.plotly_chart(render_gauge(final_score), use_container_width=True,
                          key=f"{key_prefix}_gauge")
     with label_col:
         st.metric("Match Category", result["label"])
-        st.caption("Resume-Job Match Score - not a guaranteed ATS score.")
+        st.caption("Resume-Job Match Score — an estimate, not a hiring decision or guaranteed ATS score.")
+        st.info("A high skill-match percentage only means recognized role skills were found in the resume. The overall score also includes text similarity, keyword coverage, resume structure, and project/experience relevance.")
 
     # ---- Metric cards for each component ----
     st.subheader("Score Components")
@@ -420,7 +543,7 @@ def render_result_dashboard(result: dict, resume_raw_text: str, sections: dict,
     evidence_rows = []
     for skill in sorted(comparison["matched"] | comparison["missing"]):
         if skill in comparison["matched"]:
-            evidence_rows.append({"Skill": skill, "Status": "Detected in resume and role", "Resume evidence": result["resume_evidence"].get(skill, "No sentence-level evidence found"), "Role evidence": result["jd_evidence"].get(skill, "No sentence-level evidence found")})
+            evidence_rows.append({"Skill": skill, "Status": "Detected in resume and role", "Resume evidence": redact_personal_data(result["resume_evidence"].get(skill, "No sentence-level evidence found")), "Role evidence": result["jd_evidence"].get(skill, "No sentence-level evidence found")})
         else:
             evidence_rows.append({"Skill": skill, "Status": "Not detected in resume", "Resume evidence": "No matching phrase detected", "Role evidence": result["jd_evidence"].get(skill, "No sentence-level evidence found")})
     if evidence_rows:
@@ -549,32 +672,52 @@ def render_result_dashboard(result: dict, resume_raw_text: str, sections: dict,
 
 def main():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
-    st.markdown('<div class="app-header-title">SkillBridge AI</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="app-header-subtitle">Explainable resume matching, evidence-backed skill gaps, and an adaptive learning roadmap.</div>',
+        """
+        <section class="app-hero">
+          <div class="hero-eyebrow">✦ CAREER INTELLIGENCE WORKSPACE</div>
+          <div class="app-hero-title">Build your next<br>career move.</div>
+          <div class="app-hero-copy">Turn your resume into a clear action plan. Understand where you align with a role, which skills need attention, and what to improve next — with evidence you can inspect.</div>
+          <div class="hero-pills">
+            <span class="hero-pill">◈ Explainable matching</span>
+            <span class="hero-pill">✓ Evidence-backed skills</span>
+            <span class="hero-pill">↗ Personal learning roadmap</span>
+          </div>
+        </section>
+        """,
         unsafe_allow_html=True,
     )
-    st.info(
-        "Privacy: resume text is processed in the current app session and is not intentionally persisted by this application. Avoid uploading highly sensitive documents to any hosted demo.\n\n"
-        "This score is a **Resume-Job Match Score**, not a guaranteed ATS "
-        "(Applicant Tracking System) score. Real ATS tools are proprietary; "
-        "this tool gives you an independent, explainable estimate to help "
-        "you improve your resume.",
-        icon="\u2139\uFE0F",
-    )
+    st.markdown('<div class="section-kicker">Start here · 2 minute workflow</div>', unsafe_allow_html=True)
+    st.markdown('<div class="workflow-heading">Create your role-fit report</div>', unsafe_allow_html=True)
+    st.markdown('<div class="workflow-copy">Add your resume and a real job description. SkillBridge will compare the text and show its reasoning.</div>', unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("1. Upload Your Resume (PDF)")
-        uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"])
-    with col2:
-        st.subheader("2. Paste the Job Description")
-        jd_text = st.text_area(
-            "Job description text", height=220,
-            placeholder="Paste the full job description here...",
+    with st.container(border=True):
+        col1, col2 = st.columns([0.92, 1.08], gap="large")
+        with col1:
+            st.markdown('<div class="step-number">01</div><div class="step-title">Your resume</div><div class="step-copy">Upload a text-based PDF, up to 10 MB. Review extracted content after analysis.</div>', unsafe_allow_html=True)
+            uploaded_file = st.file_uploader("Choose resume PDF", type=["pdf"], help="PDF only · Max 10 MB")
+            if uploaded_file:
+                st.success(f"Ready to analyze: {uploaded_file.name}")
+        with col2:
+            st.markdown('<div class="step-number">02</div><div class="step-title">Target role</div><div class="step-copy">Paste the job description so the analysis is based on the role you want.</div>', unsafe_allow_html=True)
+            jd_text = st.text_area(
+                "Job description", height=260,
+                placeholder="Paste the full job description here — responsibilities, required skills, qualifications…",
+                label_visibility="collapsed",
+            )
+            st.caption(f"{len(jd_text.strip()):,} characters · Minimum {MIN_JD_LENGTH} characters")
+        st.markdown("---")
+        action_col, privacy_col = st.columns([0.9, 2.1], vertical_alignment="center")
+        with action_col:
+            analyze_clicked = st.button("✦  Analyze my fit", type="primary", use_container_width=True)
+        with privacy_col:
+            st.caption("🔒 Resume content is processed in this app session. Avoid uploading sensitive documents to hosted demos.")
+    with st.expander("How to read your results"):
+        st.markdown(
+            "- **Overall match** is an estimate based on multiple components, not a hiring decision or guaranteed ATS score.\n"
+            "- **Skill match** counts recognized role skills found in your resume; it does not prove proficiency.\n"
+            "- **Evidence** shows text used to support detected skills. Review it and correct your resume where needed."
         )
-
-    analyze_clicked = st.button("Analyze Resume", type="primary")
 
     if analyze_clicked:
         if uploaded_file is None:

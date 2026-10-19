@@ -21,7 +21,7 @@ def main() -> int:
     env = os.environ.copy()
     env.setdefault("STREAMLIT_BROWSER_GATHER_USAGE_STATS", "false")
     command = [
-        sys.executable, "-m", "streamlit", "run", "app.py",
+        sys.executable, "-m", "streamlit", "run", "portal.py",
         "--server.address=127.0.0.1", f"--server.port={port}",
         "--server.headless=true", "--browser.gatherUsageStats=false",
     ]
