@@ -1,0 +1,13 @@
+# Runtime dependencies; Python 3.11 or 3.12 recommended.
+streamlit>=1.40,<2
+spacy==3.8.7
+scikit-learn>=1.4,<1.8
+pandas>=2.2,<3
+PyMuPDF>=1.24,<2
+plotly>=5.18,<7
+
+# Pin the compatible English pipeline so local, CI, and container installs agree.
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# Test dependency
+pytest>=8,<9
