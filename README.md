@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SkillBridge AI — Explainable Resume Intelligence and Skill-Gap Analyzer
 
 A Python + NLP web application that analyzes how well a resume matches a
@@ -342,3 +343,7 @@ Built as a final-year engineering student portfolio project to
 demonstrate practical, explainable NLP, text processing, data analysis,
 and full-stack Python application development — designed to be presented
 and defended in technical interviews, not just displayed on GitHub.
+=======
+# SkillBridge-AI
+AI-powered resume analysis, skill-gap detection, and personalized career roadmaps.
+>>>>>>> origin/main

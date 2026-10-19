@@ -1,37 +1,23 @@
+
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.egg-info/
-.eggs/
-
-# Virtual environments
-venv/
-env/
-.venv/
-ENV/
-
-# Streamlit local secrets (API keys, credentials) - never commit these.
-# NOTE: .streamlit/config.toml IS committed on purpose - it sets the
-# light theme as the app's permanent default and must ship with the repo.
-.streamlit/secrets.toml
-
-# Pytest / coverage
 .pytest_cache/
-.coverage
-htmlcov/
+.venv/
+venv/
 
-# Uploaded / user resume data - never commit real resumes
-sample_data/*.pdf
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# Uploaded files and personal data
 uploads/
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
+# Tooling and OS files
 .vscode/
 .idea/
-
-# Environment variables (in case any are added later)
-.env
+.DS_Store
